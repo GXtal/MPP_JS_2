@@ -1,39 +1,24 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios';
+import React from 'react'
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Home from './pages/Home';
+import OperatorInfo from './pages/OperatorInfo';
+import OperatorList from './pages/OperatorList';
+import Header from "./partials/Header";
 
-function App() {
+class App extends React.Component{  
 
-  const [backendData, setBackendData] = useState([{}]);
-
-  const client = axios.create({
-    baseURL: "/api"
-  });
-
-  useEffect(() => {
-    client.get().then(
-      response => {
-        setBackendData(response.data);
-      }
-    )
-  }, []);
-
-  return (
-    <div>
-
-      {(typeof backendData.names === 'undefined') ?
-        (
-          <p>loading</p>
-        ) :
-        (
-          backendData.names.map((name, i) => {
-            return <p key={i}>{name}</p>
-          })
-        )
-      }
-
-
+  render() {
+    return <div className="App">
+      <BrowserRouter>
+          <Header/>
+          <Routes>
+            <Route path="/" element={<Home/>}/> 
+            <Route path="/operators" element={<OperatorList/>}/>
+            <Route path="/operator/:id" element={<OperatorInfo/>}/>
+          </Routes>
+      </BrowserRouter>
     </div>
-  )
+  }
 }
 
 export default App
