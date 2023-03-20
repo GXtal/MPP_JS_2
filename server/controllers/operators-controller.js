@@ -4,7 +4,8 @@ class OperatorsController{
 
     async getOperators(req, res, next){
         try{
-            const operatorss = await operatorsService.getAll()
+            const operators = await operatorsService.getAll()
+            console.log(operators);
             return res.json(operators)
         }catch (e){
             next(e)

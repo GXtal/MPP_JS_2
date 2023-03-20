@@ -5,6 +5,7 @@ class OperatorsService{
 
     operators = JSON.parse(this.operatorsjson);
     async getAll(){
+        this.operators = JSON.parse(this.operatorsjson);
             return this.operators;
     }
 

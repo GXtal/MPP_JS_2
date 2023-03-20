@@ -14,7 +14,7 @@ app.use(cors({
 }))
 
 
-app.use('/api/apiary', operatorsRouter);
+app.use('/api/operators', operatorsRouter);
 app.use(errorMiddleware)
 
 app.get("/api", (req, res) => {
