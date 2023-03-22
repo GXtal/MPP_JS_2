@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import OperatorInfo from './pages/OperatorInfo';
 import OperatorList from './pages/OperatorList';
 import Header from "./partials/Header";
+import './styles.css';
 
 class App extends React.Component{  
 

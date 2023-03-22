@@ -1,31 +1,58 @@
-const Operator = require('../models/operator-model');
-class OperatorsService{
+const { json } = require("body-parser");
+const OperatorModel = require("../models/operator-model");
 
-    operatorsjson='[{"id":5,"name":"Gravel","rarity":"4","type":"Specialist","level":5,"elite":0,"maxLevel":45,"rarityDesc":"Four star"},{"id":3,"name":"Silverash","rarity":"6","type":"Guard","level":14,"elite":0,"maxLevel":50,"rarityDesc":"Six star"}]';
+class OperatorsService {
 
-    operators = JSON.parse(this.operatorsjson);
-    async getAll(){
+    operatorsjson = '[{"id":5,"name":"Gravel","rarity":"4","type":"Specialist","level":5,"elite":0,"maxLevel":45,"rarityDesc":"Four star"},{"id":3,"name":"Silverash","rarity":"6","type":"Guard","level":14,"elite":0,"maxLevel":50,"rarityDesc":"Six star"}]';
+
+    operators = [];
+    maxId = 0;
+    async getAll() {
+
         this.operators = JSON.parse(this.operatorsjson);
-            return this.operators;
+
+
+        console.log("operators");
+        console.log(this.operators);
+
+        this.operators.forEach((x) => {
+            if (x.id > this.maxId) {
+                this.maxId = x.id
+            }
+        })
+        return this.operators;
     }
 
-    async get(id){
-        index = this.operators.findIndex((x)=>{x.id===id});
+    async get(id) {
+        let index = this.operators.findIndex((x) => {return x.id == id });
         return this.operators[index];
-    }    
-
-    async set(id,command){
-        if(command==="level_up")
-        {
-            index = this.operators.findIndex((x)=>{x.id===id});
-            Operator.changeLevel(this.operators[index],this.operators[index].level+1);
-        }
     }
 
-    async add(name){
-        
+    async set(id, newOperator) {
+        let index = this.operators.findIndex((x) => {return x.id == id });
+        let op = new OperatorModel(newOperator.id, newOperator.name, newOperator.type, newOperator.rarity, newOperator.level, newOperator.elite);
+        this.operators[index]=op;
+        console.log('ftghjiihugyftyg',this.operators);
+        this.operatorsjson = JSON.stringify(this.operators);
+        return this.operators[index];
     }
-    async delete(id){
+
+    async add() {
+        let id = ++this.maxId;
+        let op = new OperatorModel(id, "Knight", "Sniper", 1);
+        this.operators.push(op);
+        this.operatorsjson = JSON.stringify(this.operators);
+        return this.operators;
+    }
+
+    async delete(id) {
+        console.log(id);
+        let index = this.operators.findIndex((x) => {return x.id == id });
+        console.log(index);
+        this.operators.splice(index,1);
+        console.log(this.operators);
+        this.operatorsjson = JSON.stringify(this.operators);
+        return true;    
 
     }
 }

@@ -9,10 +9,24 @@ class OperatorModel{
         this.id = id;//generated
         this.name=name;//inputed
         this.rarity=rarity;//choose
-        this.type=type;//choose
-        this.level=level;
-        this.elite=elite;        
+        this.type=type;//choose        
+        this.elite=elite;                
         this.maxLevel = maxLevels[this.elite][this.rarity-1];
+        if(this.maxLevel)
+        {
+            if((level>0)&&(level<=this.maxLevel))
+            {
+                this.level=level;
+            }else
+            {
+                this.level=1;
+            }
+        }else
+        {
+            this.level=1;
+            this.elite=0;
+        }
+        
         this.rarityDesc=rarityDescs[this.rarity-1];
     }      
 
@@ -42,4 +56,4 @@ class OperatorModel{
 }
 
 
-module.exports = OperatorModel;
+export default OperatorModel;

@@ -1,5 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
+import Operator from '../partials/Operator'
+import OperatorModel from '../models/operator-model';
 
 class OperatorList extends React.Component {
 
@@ -8,14 +11,23 @@ class OperatorList extends React.Component {
             operators: [],
         };
 
-    client = axios.create({
-        baseURL: "/api/operators"
-    });
-
     componentDidMount() {
         axios.get("/api/operators/getAll").then(
             response => {
                 this.setState(() => {
+
+                    return { operators: response.data };
+                })
+            }
+        )
+    }
+
+    createNewOperator=()=>
+    {
+        axios.post('/api/operators/add').then(
+            response => {
+                this.setState(() => {
+
                     return { operators: response.data };
                 })
             }
@@ -25,11 +37,10 @@ class OperatorList extends React.Component {
     render() {
         return (
             <div>
-                OperatorList
+                <button className='nice-button' onClick={this.createNewOperator}>Add</button>
                 {this.state.operators.map((operator) => {
-                    return <p>{operator.name}</p>
+                    return <Operator key={operator.id} op={operator}/>
                 })}
-
             </div>
         );
     }

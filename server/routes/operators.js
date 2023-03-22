@@ -8,6 +8,6 @@ router.post('/update/:id',controller.updateOperator);
 
 router.post('/add/', controller.addOperator);
 
-router.post('/delete/:id', controller.deleteOperator);
+router.delete('/update/:id', controller.deleteOperator);
 
 module.exports = router;
