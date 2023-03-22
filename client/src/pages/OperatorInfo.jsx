@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import withRouter from '../withRouter';
+import withRouter from '../sub/withRouter';
 import OperatorModel from '../models/operator-model';
-import { browserHistory } from 'react-router'
+import OperatorsService from '../services/OperatorsService';
 
 class OperatorInfo extends React.Component {
 
@@ -14,7 +14,7 @@ class OperatorInfo extends React.Component {
 
     componentDidMount() {
         let _id = this.props.router.params.id;
-        axios.get(`/api/operators/get/${_id}`).then(
+        OperatorsService.fetchOperator(_id).then(
             response => {
                 console.log(response);
                 this.setState(() => {
@@ -68,7 +68,7 @@ class OperatorInfo extends React.Component {
     
     onSave=(event)=>
     {
-        axios.post(`/api/operators/update/${this.state.operator.id}`,this.state.operator).then(
+        OperatorsService.updateOperator(this.state.operator.id,this.state.operator).then(
             response => {
                 console.log(response);
                 this.setState(() => {

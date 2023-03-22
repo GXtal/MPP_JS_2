@@ -1,8 +1,6 @@
 import React from 'react';
-import axios from 'axios';
-import {useNavigate} from 'react-router-dom';
 import Operator from '../partials/Operator'
-import OperatorModel from '../models/operator-model';
+import OperatotsService from '../services/OperatorsService';
 
 class OperatorList extends React.Component {
 
@@ -12,9 +10,11 @@ class OperatorList extends React.Component {
         };
 
     componentDidMount() {
-        axios.get("/api/operators/getAll").then(
+        OperatotsService.fetchOperators().then(
             response => {
-                this.setState(() => {
+
+                
+                this.setState(() => {  
 
                     return { operators: response.data };
                 })
@@ -24,7 +24,7 @@ class OperatorList extends React.Component {
 
     createNewOperator=()=>
     {
-        axios.post('/api/operators/add').then(
+        OperatotsService.addOperator().then(
             response => {
                 this.setState(() => {
 

@@ -6,7 +6,7 @@ router.get('/getAll/',controller.getOperators );
 router.get('/get/:id',controller.getOperator);
 router.post('/update/:id',controller.updateOperator);
 
-router.post('/add/', controller.addOperator);
+router.put('/add/', controller.addOperator);
 
 router.delete('/update/:id', controller.deleteOperator);
 

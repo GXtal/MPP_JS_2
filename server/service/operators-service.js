@@ -7,8 +7,8 @@ class OperatorsService {
 
     operators = [];
     maxId = 0;
-    async getAll() {
 
+    constructor() {
         this.operators = JSON.parse(this.operatorsjson);
 
 
@@ -20,19 +20,22 @@ class OperatorsService {
                 this.maxId = x.id
             }
         })
+    }
+    async getAll() {
+
         return this.operators;
     }
 
     async get(id) {
-        let index = this.operators.findIndex((x) => {return x.id == id });
+        let index = this.operators.findIndex((x) => { return x.id == id });
         return this.operators[index];
     }
 
     async set(id, newOperator) {
-        let index = this.operators.findIndex((x) => {return x.id == id });
+        let index = this.operators.findIndex((x) => { return x.id == id });
         let op = new OperatorModel(newOperator.id, newOperator.name, newOperator.type, newOperator.rarity, newOperator.level, newOperator.elite);
-        this.operators[index]=op;
-        console.log('ftghjiihugyftyg',this.operators);
+        this.operators[index] = op;
+        console.log('ftghjiihugyftyg', this.operators);
         this.operatorsjson = JSON.stringify(this.operators);
         return this.operators[index];
     }
@@ -47,12 +50,12 @@ class OperatorsService {
 
     async delete(id) {
         console.log(id);
-        let index = this.operators.findIndex((x) => {return x.id == id });
+        let index = this.operators.findIndex((x) => { return x.id == id });
         console.log(index);
-        this.operators.splice(index,1);
+        this.operators.splice(index, 1);
         console.log(this.operators);
         this.operatorsjson = JSON.stringify(this.operators);
-        return true;    
+        return true;
 
     }
 }

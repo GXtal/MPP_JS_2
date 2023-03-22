@@ -1,8 +1,11 @@
 const express = require("express");
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+
 const operatorsRouter = require("./routes/operators");
 const errorMiddleware = require('./middleware/error-middleware');
+const userRouter = require('./routes/users');
+const authMiddleware = require('./middleware/auth-middleware')
 
 const app = express();
 
@@ -14,7 +17,10 @@ app.use(cors({
 }))
 
 
+//app.use('/api/operators',authMiddleware, operatorsRouter);
 app.use('/api/operators', operatorsRouter);
+app.use('/api/users', userRouter);
+
 app.use(errorMiddleware)
 
 app.get("/api", (req, res) => {
