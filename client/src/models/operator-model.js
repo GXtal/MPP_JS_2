@@ -1,6 +1,7 @@
 const maxLevels=[[30,30,40,45,50,50],
                 [NaN,NaN,55,60,70,80],
-                [NaN,NaN,NaN,70,80,90]];
+                [NaN,NaN,NaN,70,80,90],
+                [NaN,NaN,NaN,NaN,NaN,NaN]];
                 
 const rarityDescs=["One star","Two star","Three star","Four star","Five star","Six star"];
                 

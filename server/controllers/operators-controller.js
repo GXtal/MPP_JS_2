@@ -42,8 +42,8 @@ class OperatorsController{
     async deleteOperator(req, res, next){
         try{
             const {id} = req.params            
-            const flag = await operatorsService.delete(id)
-            return res.json(flag)
+            const operators = await operatorsService.delete(id)
+            return res.json(operators)
         }catch (e){
             next(e)
         }

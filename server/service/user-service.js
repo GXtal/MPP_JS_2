@@ -4,7 +4,6 @@ const tokenService = require('../service/token-service')
 const ApiError = require('../middleware/errors')
 
 
-
 class UserService {
 
     usersjson = '[]';
@@ -14,6 +13,7 @@ class UserService {
     maxId = 0;
 
     constructor() {
+
         this.users = JSON.parse(this.usersjson);
 
         console.log("users");

@@ -65,6 +65,16 @@ class OperatorInfo extends React.Component {
             return { operator: b};
         });
     }
+    onEliteUp=(event)=>
+    {
+        this.setState(()=>
+        {
+            var a = this.state.operator
+            var b = new OperatorModel(a.id, a.name, a.type, a.rarity, a.level, a.elite);
+            b.eliteChange(b.elite+1);
+            return { operator: b};
+        });
+    }
     
     onSave=(event)=>
     {
@@ -125,6 +135,13 @@ class OperatorInfo extends React.Component {
                     <input className="nice-input" value={this.state.operator.level}/>
                     <button className="nice-button" onClick={this.onLevelUp}>Level Up</button>
                 </div>
+
+                <div className="input-part">
+                    <label>Elited:</label>
+                    <input className="nice-input" value={this.state.operator.elite}/>
+                    <button className="nice-button" onClick={this.onEliteUp}> Elited  Up</button>
+                </div>
+
 
                 <div className="input-part">
                     <button className="nice-button" onClick={this.onSave}>Save</button>

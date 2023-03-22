@@ -12,7 +12,6 @@ class OperatorList extends React.Component {
     componentDidMount() {
         OperatotsService.fetchOperators().then(
             response => {
-
                 
                 this.setState(() => {  
 

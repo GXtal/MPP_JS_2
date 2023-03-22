@@ -1,16 +1,24 @@
-const { json } = require("body-parser");
 const OperatorModel = require("../models/operator-model");
+const fs = require('fs')
+const path = require('path')
+const operatorsDB = path.resolve(__dirname, "operators.json")
 
 class OperatorsService {
 
-    operatorsjson = '[{"id":5,"name":"Gravel","rarity":"4","type":"Specialist","level":5,"elite":0,"maxLevel":45,"rarityDesc":"Four star"},{"id":3,"name":"Silverash","rarity":"6","type":"Guard","level":14,"elite":0,"maxLevel":50,"rarityDesc":"Six star"}]';
+    operatorsjson = '';
 
     operators = [];
     maxId = 0;
 
     constructor() {
-        this.operators = JSON.parse(this.operatorsjson);
 
+        try {
+            this.operatorsjson = fs.readFileSync(operatorsDB, "utf8");
+        } catch(error) {
+            console.error(error);
+        }
+
+        this.operators = JSON.parse(this.operatorsjson);
 
         console.log("operators");
         console.log(this.operators);
@@ -37,6 +45,7 @@ class OperatorsService {
         this.operators[index] = op;
         console.log('ftghjiihugyftyg', this.operators);
         this.operatorsjson = JSON.stringify(this.operators);
+        fs.writeFileSync(operatorsDB, this.operatorsjson);
         return this.operators[index];
     }
 
@@ -45,6 +54,7 @@ class OperatorsService {
         let op = new OperatorModel(id, "Knight", "Sniper", 1);
         this.operators.push(op);
         this.operatorsjson = JSON.stringify(this.operators);
+        fs.writeFileSync(operatorsDB, this.operatorsjson);
         return this.operators;
     }
 
@@ -55,7 +65,8 @@ class OperatorsService {
         this.operators.splice(index, 1);
         console.log(this.operators);
         this.operatorsjson = JSON.stringify(this.operators);
-        return true;
+        fs.writeFileSync(operatorsDB, this.operatorsjson);
+        return this.operators;
 
     }
 }

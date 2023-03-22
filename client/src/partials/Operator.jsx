@@ -19,6 +19,7 @@ class Operator extends React.Component {
           <p className="main-char-text">Operator {this.state.operator.name} </p>
           <p className="main-char-text">Rarity:  {this.state.operator.rarityDesc}</p>
           <p className="main-char-text">Type: {this.state.operator.type}</p>
+          
         </div>
       </Link>
     );
