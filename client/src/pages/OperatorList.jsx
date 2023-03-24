@@ -1,29 +1,58 @@
 import React from 'react';
 import Operator from '../partials/Operator'
-import OperatotsService from '../services/OperatorsService';
+import OperatorsService from '../services/OperatorsService';
+import withRouter from '../sub/withRouter'
+import { AuthContext } from "../contexts/AuthContext";
 
 class OperatorList extends React.Component {
 
+
+    static contextType = AuthContext;
     state =
         {
             operators: [],
+            loading: true,
+            error: {},
         };
 
-    componentDidMount() {
-        OperatotsService.fetchOperators().then(
-            response => {
-                
-                this.setState(() => {  
 
-                    return { operators: response.data };
-                })
+    async componentDidMount() {
+        const { dispatch, user } = this.context;
+        try {
+
+            if (user == null) {
+                this.props.router.navigate("/login")
             }
-        )
+            const response = await OperatorsService.fetchOperators();
+
+            this.setState(() => {
+                return { operators: response.data };
+            })
+
+
+        }
+        catch (e) {
+            console.log(e);
+
+            if (user == null) {
+                this.props.router.navigate('/login');
+            }
+            if (e.response?.status == 401) {
+                dispatch({ type: "LOGIN_FAILURE", payload: e.response.data })
+                this.props.router.navigate('/login');
+            }
+            else {
+
+            }
+        }
+        finally {
+            this.setState(() => { return { loading: false } });
+        }
+
     }
 
-    createNewOperator=()=>
-    {
-        OperatotsService.addOperator().then(
+    createNewOperator = () => {
+        OperatorsService.addOperator().then(
             response => {
                 this.setState(() => {
 
@@ -36,13 +65,20 @@ class OperatorList extends React.Component {
     render() {
         return (
             <div>
-                <button className='nice-button' onClick={this.createNewOperator}>Add</button>
-                {this.state.operators.map((operator) => {
-                    return <Operator key={operator.id} op={operator}/>
-                })}
+
+                <div style={{ visibility: !this.state.loading ? "hidden" : "visible" }}>
+                    LOADING...
+                </div>
+
+                <div style={{ visibility: this.state.loading ? "hidden" : "visible" }}>
+                    <button className='nice-button' onClick={this.createNewOperator}>Add</button>
+                    {this.state.operators.map((operator) => {
+                        return <Operator key={operator.id} op={operator} />
+                    })}
+                </div>
             </div>
         );
     }
 }
 
-export default OperatorList;
+export default withRouter(OperatorList);

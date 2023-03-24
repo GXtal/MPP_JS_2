@@ -5,7 +5,7 @@ const operatorsDB = path.resolve(__dirname, "operators.json")
 
 class OperatorsService {
 
-    operatorsjson = '';
+    operatorsjson = '[]';
 
     operators = [];
     maxId = 0;
@@ -29,8 +29,7 @@ class OperatorsService {
             }
         })
     }
-    async getAll() {
-
+    async getAll() {        
         return this.operators;
     }
 

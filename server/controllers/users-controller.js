@@ -3,6 +3,8 @@ const {validationResult} = require('express-validator')
 const ApiError = require('../middleware/errors')
 
 class UserController{
+
+    
     async registration(req, res, next){
         try{
             const errors = validationResult(req)
@@ -28,6 +30,7 @@ class UserController{
             next(e)
         }
     }
+
     async logout(req, res, next){
         try{
             const {refreshToken} = req.cookies

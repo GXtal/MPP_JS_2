@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+require('dotenv').config()
 
 const operatorsRouter = require("./routes/operators");
 const errorMiddleware = require('./middleware/error-middleware');
@@ -17,8 +18,8 @@ app.use(cors({
 }))
 
 
-//app.use('/api/operators',authMiddleware, operatorsRouter);
-app.use('/api/operators', operatorsRouter);
+app.use('/api/operators',authMiddleware, operatorsRouter);
+//app.use('/api/operators', operatorsRouter);
 app.use('/api/users', userRouter);
 
 app.use(errorMiddleware)

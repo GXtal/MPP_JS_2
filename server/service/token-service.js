@@ -4,6 +4,7 @@ const TokenModel = require('../models/token-model');
 class TokenService {
 
     tokens = [];
+
     maxId=0;
     constructor() {
         this.tokens = [];
@@ -22,25 +23,27 @@ class TokenService {
 
     async saveToken(userId, refreshToken) {
 
-        const index = this.tokens.indexOf((x) => x.userId === userId);
+        const index = this.tokens.findIndex((x) => x.userId === userId);
+
+        var token;
 
         if (index == -1) {
 
             let id = ++this.maxId;
-            const token = new TokenModel(id,userId,refreshToken);
+            token = new TokenModel(id,userId,refreshToken);
             this.tokens.push(token);
 
         }
         else
         {
-            const token = this.token[index];
+            token = this.token[index];
             token.refreshToken = refreshToken;
         }
 
         return token
     }
     async removeToken(refreshToken) {
-        const index = this.tokens.indexOf((x) => x.refreshToken === refreshToken);
+        const index = this.tokens.findIndex((x) => x.refreshToken === refreshToken);
         this.tokens.splice(index, 1);
         return true;
     }
@@ -64,7 +67,7 @@ class TokenService {
     }
 
     async findToken(refreshToken) {
-        const index = this.tokens.indexOf((x) => x.refreshToken === refreshToken);
+        const index = this.tokens.findIndex((x) => x.refreshToken === refreshToken);
 
         const tokenData = this.tokens[index];
         return tokenData

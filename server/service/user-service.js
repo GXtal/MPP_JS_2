@@ -2,7 +2,10 @@ const UserModel = require('../models/user-model')
 const bcrypt = require('bcrypt')
 const tokenService = require('../service/token-service')
 const ApiError = require('../middleware/errors')
+const path=require('path');
+const fs = require('fs')
 
+const usersDB = path.resolve(__dirname, "users.json")
 
 class UserService {
 
@@ -13,6 +16,12 @@ class UserService {
     maxId = 0;
 
     constructor() {
+
+        try {
+            this.usersjson = fs.readFileSync(usersDB, "utf8");
+        } catch(error) {
+            console.error(error);
+        }
 
         this.users = JSON.parse(this.usersjson);
 
@@ -28,7 +37,7 @@ class UserService {
 
     async registration(nickname, password) {
 
-        if (this.users.indexOf((x) => x.nickname === nickname) != -1) {
+        if (this.users.findIndex((x) => x.nickname === nickname) != -1) {
             throw ApiError.BadRequest('User with nickname ' + nickname + ' is already exists')
         }
 
@@ -39,6 +48,9 @@ class UserService {
 
         const user = new UserModel(id, nickname, hashPassword);
         this.users.push(user);
+
+        this.usersjson = JSON.stringify(this.users);
+        fs.writeFileSync(usersDB, this.usersjson);
 
         const tokens = tokenService.generateTokens({ ...user });
         await tokenService.saveToken(user.id, tokens.refreshToken)
@@ -51,7 +63,10 @@ class UserService {
 
     async login(nickname, password) {
 
-        const index = this.users.indexOf((x) => x.nickname === nickname);
+        const index = this.users.findIndex((x) => {
+            console.log(x);
+            return (x.nickname === nickname)});
+        console.log(index);
         if (index == -1) {
             throw ApiError.BadRequest('No user with such nickname')
         }
@@ -88,7 +103,7 @@ class UserService {
         if (!userData || !tokenData) {
             return ApiError.UnauthorizedError()
         }
-        const index = this.users.indexOf((x) => x.id === userData.id);
+        const index = this.users.findIndex((x) => x.id === userData.id);
         if (index == -1) {
             throw ApiError.BadRequest('No user with such nickname')
         }
