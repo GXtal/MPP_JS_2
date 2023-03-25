@@ -29,7 +29,7 @@ class OperatorInfo extends React.Component {
 
             this.setState(() => {
                 const a = response.data;
-                return { operator: new OperatorModel(a.id, a.name, a.type, a.rarity, a.level, a.elite) };
+                return { operator: new OperatorModel(a.id, a.owner, a.name, a.type, a.rarity, a.level, a.elite) };
             })
 
 
@@ -56,7 +56,7 @@ class OperatorInfo extends React.Component {
     onNameChange = (event) => {
         this.setState(() => {
             var a = this.state.operator
-            var b = new OperatorModel(a.id, event.target.value, a.type, a.rarity, a.level, a.elite);
+            var b = new OperatorModel(a.id,a.owner, event.target.value, a.type, a.rarity, a.level, a.elite);
             return { operator: b };
         });
     }
@@ -64,7 +64,7 @@ class OperatorInfo extends React.Component {
     onRarityChange = (event) => {
         this.setState(() => {
             var a = this.state.operator
-            var b = new OperatorModel(a.id, a.name, a.type, event.target.value, a.level, a.elite);
+            var b = new OperatorModel(a.id, a.owner,a.name, a.type, event.target.value, a.level, a.elite);
             return { operator: b };
         });
     }
@@ -72,23 +72,25 @@ class OperatorInfo extends React.Component {
     onTypeChange = (event) => {
         this.setState(() => {
             var a = this.state.operator
-            var b = new OperatorModel(a.id, a.name, event.target.value, a.rarity, a.level, a.elite);
+            var b = new OperatorModel(a.id,a.owner, a.name, event.target.value, a.rarity, a.level, a.elite);
             return { operator: b };
         });
     }
 
     onLevelUp = (event) => {
+        event.preventDefault()
         this.setState(() => {
             var a = this.state.operator
-            var b = new OperatorModel(a.id, a.name, a.type, a.rarity, a.level, a.elite);
+            var b = new OperatorModel(a.id,a.owner, a.name, a.type, a.rarity, a.level, a.elite);
             b.levelChange(b.level + 1);
             return { operator: b };
         });
     }
     onEliteUp = (event) => {
+        event.preventDefault()
         this.setState(() => {
             var a = this.state.operator
-            var b = new OperatorModel(a.id, a.name, a.type, a.rarity, a.level, a.elite);
+            var b = new OperatorModel(a.id, a.owner,a.name, a.type, a.rarity, a.level, a.elite);
             b.eliteChange(b.elite + 1);
             return { operator: b };
         });
@@ -102,7 +104,7 @@ class OperatorInfo extends React.Component {
 
             this.setState(() => {
                 const a = response.data;
-                return { operator: new OperatorModel(a.id, a.name, a.type, a.rarity, a.level, a.elite) };
+                return { operator: new OperatorModel(a.id, a.owner, a.name, a.type, a.rarity, a.level, a.elite) };
             })
 
 
@@ -158,21 +160,25 @@ class OperatorInfo extends React.Component {
 
     render() {
         return (
-            <div>
-                <div style={{ visibility: !this.state.loading ? "hidden" : "visible" }}>
-                    LOADING...
+            <div className='bg-secondary'>
+
+                <div class="spinner-grow text-primary text-center" role="status" style={{ visibility: !this.state.loading ? "hidden" : "visible" }}>
+                    <span class="sr-only"></span>
                 </div>
 
+
+                <form> 
+                    
                 <div className="character-edit" style={{ visibility: this.state.loading ? "hidden" : "visible" }}>
 
-                    <div className="input-part">
+                    <div className="form-group">
                         <label>Name:</label>
-                        <input className="nice-input" value={this.state.operator.name} onChange={this.onNameChange} />
+                        <input className="form-control" value={this.state.operator.name} onChange={this.onNameChange} />
                     </div>
 
-                    <div className="input-part">
+                    <div className="form-group">
                         <label>Character rarity:</label>
-                        <select className="nice-input" value={this.state.operator.rarity} onChange={this.onRarityChange}>
+                        <select className="form-control" value={this.state.operator.rarity} onChange={this.onRarityChange}>
                             <option value="6">Six star</option>
                             <option value="5">Five star</option>
                             <option value="4">Four star</option>
@@ -182,9 +188,9 @@ class OperatorInfo extends React.Component {
                         </select>
                     </div>
 
-                    <div className="input-part">
+                    <div className="form-group">
                         <label>Character type:</label>
-                        <select className="nice-input" value={this.state.operator.type} onChange={this.onTypeChange}>
+                        <select className="form-control" value={this.state.operator.type} onChange={this.onTypeChange}>
                             <option value="Sniper">Sniper</option>
                             <option value="Defender">Defender</option>
                             <option value="Caster">Caster</option>
@@ -196,16 +202,16 @@ class OperatorInfo extends React.Component {
                         </select>
                     </div>
 
-                    <div className="input-part">
+                    <div className="form-group">
                         <label>Level:</label>
-                        <input className="nice-input" value={this.state.operator.level} />
-                        <button className="nice-button" onClick={this.onLevelUp}>Level Up</button>
+                        <input className="form-control" value={this.state.operator.level} />
+                        <button className="form-control" onClick={this.onLevelUp}>Level Up</button>
                     </div>
 
-                    <div className="input-part">
+                    <div className="form-group">
                         <label>Elited:</label>
-                        <input className="nice-input" value={this.state.operator.elite} />
-                        <button className="nice-button" onClick={this.onEliteUp}> Elited  Up</button>
+                        <input className="form-control" value={this.state.operator.elite} />
+                        <button className="form-control" onClick={this.onEliteUp}> Elited  Up</button>
                     </div>
 
 
@@ -216,6 +222,7 @@ class OperatorInfo extends React.Component {
 
 
                 </div>
+                </form>
             </div>
         );
     }

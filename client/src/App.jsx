@@ -6,7 +6,9 @@ import OperatorList from './pages/OperatorList';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Header from "./partials/Header";
-import './styles.css';
+
+import 'bootstrap/dist/css/bootstrap.css';
+import './styles.css'
 
 class App extends React.Component{  
 

@@ -32,7 +32,7 @@ function Login(props) {
     return (
         <div>
             <div className="container bg-dark d-flex flex-column p-5 w-50 align-items-center
-            rounded-5 border border-secondary">
+            rounded-5 border border-secondary align-middle">
                 <div className="w-100">
                     <div className="input-group mb-2">
                         <span className="input-group-text">Nickname</span>
@@ -44,10 +44,10 @@ function Login(props) {
                         <input type="password" id="password" className="form-control"
                                onChange={handleChange}/>
                     </div>
-                    <button className="btn btn-outline-warning w-100"
+                    <button className="btn btn-outline-primary w-100"
                             onClick={handleClick}>Login</button>
                 </div>
-                <div className="spinner-grow text-warning mt-4" role="status"
+                <div className="spinner-grow text-primary mt-4" role="status"
                      style={{visibility: !loading?"hidden":"visible"}}>
                     <span className="visually-hidden">Loading...</span>
                 </div>

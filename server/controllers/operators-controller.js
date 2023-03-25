@@ -4,7 +4,9 @@ class OperatorsController{
 
     async getOperators(req, res, next){
         try{
-            const operators = await operatorsService.getAll()            
+            const owner = req.user.id;
+            console.log(req.user);
+            const operators = await operatorsService.getAll(owner)            
             return res.json(operators)
         }catch (e){
             next(e)
@@ -14,7 +16,8 @@ class OperatorsController{
     async getOperator(req, res, next){
         try{
             const {id} = req.params
-            const operator = await operatorsService.get(id)
+            const owner = req.user.id;
+            const operator = await operatorsService.get(id,owner)
             return res.json(operator)
         }catch (e){
             next(e)
@@ -25,7 +28,8 @@ class OperatorsController{
         try{
             const {id} = req.params
             const newop = req.body
-            const operator = await operatorsService.set(id, newop)
+            const owner = req.user.id;
+            const operator = await operatorsService.set(id, owner,newop)
             return res.json(operator)
         }catch (e){
             next(e)
@@ -33,7 +37,9 @@ class OperatorsController{
     }
     async addOperator(req, res, next){
         try{
-            const operators = await operatorsService.add()
+            const owner = req.user.id;
+            console.log(req.user);
+            const operators = await operatorsService.add(owner)
             return res.json(operators)
         }catch (e){
             next(e)
@@ -41,8 +47,9 @@ class OperatorsController{
     }
     async deleteOperator(req, res, next){
         try{
-            const {id} = req.params            
-            const operators = await operatorsService.delete(id)
+            const {id} = req.params           
+            const owner = req.user.id; 
+            const operators = await operatorsService.delete(id,owner);
             return res.json(operators)
         }catch (e){
             next(e)

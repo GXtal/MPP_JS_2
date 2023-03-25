@@ -3,6 +3,9 @@ import Operator from '../partials/Operator'
 import OperatorsService from '../services/OperatorsService';
 import withRouter from '../sub/withRouter'
 import { AuthContext } from "../contexts/AuthContext";
+import {
+    Navigate,
+  } from 'react-router-dom';
 
 class OperatorList extends React.Component {
 
@@ -18,12 +21,13 @@ class OperatorList extends React.Component {
 
     async componentDidMount() {
         const { dispatch, user } = this.context;
+        if (user == null) {
+            this.props.router.navigate('/login');
+        }
         try {
 
-            if (user == null) {
-                this.props.router.navigate("/login")
-            }
-            const response = await OperatorsService.fetchOperators();
+            console.log(user);
+            const response = await OperatorsService.fetchOperators(user.id);
 
             this.setState(() => {
                 return { operators: response.data };
@@ -49,20 +53,53 @@ class OperatorList extends React.Component {
             this.setState(() => { return { loading: false } });
         }
 
+
+
     }
 
-    createNewOperator = () => {
-        OperatorsService.addOperator().then(
-            response => {
-                this.setState(() => {
+    createNewOperator = async () => {
 
-                    return { operators: response.data };
-                })
+        const { dispatch, user } = this.context;
+        if (user == null) {
+            this.props.router.navigate('/login');
+        }
+        try {
+
+            const response = await OperatorsService.addOperator(user.id);
+
+            this.setState(() => {
+                return { operators: response.data };
+            })
+
+
+        }
+        catch (e) {
+            console.log(e);
+
+            if (user == null) {
+                this.props.router.navigate('/login');
             }
-        )
+            if (e.response?.status == 401) {
+                dispatch({ type: "LOGIN_FAILURE", payload: e.response.data })
+                this.props.router.navigate('/login');
+            }
+            else {
+
+            }
+        }
+        finally {
+            this.setState(() => { return { loading: false } });
+        }
+
+
     }
 
     render() {
+        const { dispatch, user } = this.context;
+        if(!user)
+        {
+            return (<Navigate replace to="/login"></Navigate>)
+        }
         return (
             <div>
 

@@ -26,25 +26,32 @@ class Header extends React.Component {
         const { dispatch, user } = this.context;
 
         return (
-            <div className="navigation">
+            <div className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <header>
-                    <Link to="/" className="nice-button">Home</Link>
-                    <Link to="/operators" className="nice-button">Operators</Link>
+                    <div className='collapse navbar-collapse' id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
 
-                    {user ?
-                        (
-                            <div className="">
-                                <span className="nice-button">{user.nickname}</span>
-                                <button onClick={this.handleClick} className="">Logout</button>
-                            </div>)
-                        :
-                        (
-                            <div className="input-group">
-                                <Link to="/login" className="nice-button">Login</Link>
-                                <Link to="/register" className="nice-button">Sign-up</Link>
-                            </div>
-                        )
-                    }
+                        <Link to="/" className="nav-item nav-link">Home</Link>
+                        <Link to="/operators" className="nav-item nav-link">Operators</Link>
+
+                        {user ?
+                            (
+                                <>
+                                <span className="nav-item nav-link text-white">{user.nickname}</span>
+                                <button onClick={this.handleClick} className="nav-item nav-link btn ">Logout</button>
+                                </>)
+                            :
+                            (
+                                <div className="input-group">
+                                    <Link to="/login" className="nav-item nav-link">Login</Link>
+                                    <Link to="/register" className="nav-item nav-link">Sign-up</Link>
+                                </div>
+                            )
+                        }
+                        </div>
+
+                    </div>
+                    
 
                 </header>
             </div>

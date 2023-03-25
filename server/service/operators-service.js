@@ -14,7 +14,7 @@ class OperatorsService {
 
         try {
             this.operatorsjson = fs.readFileSync(operatorsDB, "utf8");
-        } catch(error) {
+        } catch (error) {
             console.error(error);
         }
 
@@ -29,35 +29,51 @@ class OperatorsService {
             }
         })
     }
-    async getAll() {        
-        return this.operators;
+    async getAll(owner) {
+        var ownerOperators = this.operators.filter(x => x.owner == owner);
+        return ownerOperators;
     }
 
-    async get(id) {
+    async get(id, owner) {
         let index = this.operators.findIndex((x) => { return x.id == id });
-        return this.operators[index];
+        console.log("get");
+        console.log(index);
+        if (this.operators[index].owner == owner) {
+            return this.operators[index];
+        }
+        else {
+
+        }
+
     }
 
-    async set(id, newOperator) {
+    async set(id, owner, newOperator) {
         let index = this.operators.findIndex((x) => { return x.id == id });
-        let op = new OperatorModel(newOperator.id, newOperator.name, newOperator.type, newOperator.rarity, newOperator.level, newOperator.elite);
-        this.operators[index] = op;
-        console.log('ftghjiihugyftyg', this.operators);
-        this.operatorsjson = JSON.stringify(this.operators);
-        fs.writeFileSync(operatorsDB, this.operatorsjson);
-        return this.operators[index];
+        if (this.operators[index].owner == owner) {
+            let op = new OperatorModel(newOperator.id, newOperator.owner, newOperator.name, newOperator.type, newOperator.rarity, newOperator.level, newOperator.elite);
+            this.operators[index] = op;
+            this.operatorsjson = JSON.stringify(this.operators);
+            fs.writeFileSync(operatorsDB, this.operatorsjson);
+            return this.operators[index];
+        }
+        else {
+
+        }
+
+
     }
 
-    async add() {
+    async add(owner) {
+        
         let id = ++this.maxId;
-        let op = new OperatorModel(id, "Knight", "Sniper", 1);
+        let op = new OperatorModel(id, owner, "Knight", "Sniper", 1);
         this.operators.push(op);
         this.operatorsjson = JSON.stringify(this.operators);
         fs.writeFileSync(operatorsDB, this.operatorsjson);
-        return this.operators;
+        return this.getAll(owner);
     }
 
-    async delete(id) {
+    async delete(id, owner) {
         console.log(id);
         let index = this.operators.findIndex((x) => { return x.id == id });
         console.log(index);
@@ -65,7 +81,7 @@ class OperatorsService {
         console.log(this.operators);
         this.operatorsjson = JSON.stringify(this.operators);
         fs.writeFileSync(operatorsDB, this.operatorsjson);
-        return this.operators;
+        return this.getAll(owner);
 
     }
 }

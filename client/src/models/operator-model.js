@@ -6,8 +6,9 @@ const maxLevels=[[30,30,40,45,50,50],
 const rarityDescs=["One star","Two star","Three star","Four star","Five star","Six star"];
                 
 class OperatorModel{
-    constructor(id,name, type, rarity, level=1,elite=0) {
+    constructor(id,owner,name, type, rarity, level=1,elite=0) {
         this.id = id;//generated
+        this.owner=owner;
         this.name=name;//inputed
         this.rarity=rarity;//choose
         this.type=type;//choose        

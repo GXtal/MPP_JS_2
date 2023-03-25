@@ -1,10 +1,10 @@
 import api from "../http";
 
 export default class OperatorsService{
-    static async fetchOperators(){
+    static async fetchOperators(owner){
         return await api.get('/operators/getAll/')
     }
-    static async addOperator(){
+    static async addOperator(owner){
         return await api.put('/operators/add/')
     }
     static async fetchOperator(id){
