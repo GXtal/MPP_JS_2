@@ -160,7 +160,7 @@ class OperatorInfo extends React.Component {
 
     render() {
         return (
-            <div className='bg-secondary'>
+            <div>
 
                 <div class="spinner-grow text-primary text-center" role="status" style={{ visibility: !this.state.loading ? "hidden" : "visible" }}>
                     <span class="sr-only"></span>
@@ -169,7 +169,8 @@ class OperatorInfo extends React.Component {
 
                 <form> 
                     
-                <div className="character-edit" style={{ visibility: this.state.loading ? "hidden" : "visible" }}>
+                <div className="container bg-dark d-flex flex-column mt-3 pt-3 align-items-center
+            rounded-5 border border-secondary w-50" style={{ visibility: this.state.loading ? "hidden" : "visible" }}>
 
                     <div className="form-group">
                         <label>Name:</label>

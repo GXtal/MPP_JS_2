@@ -36,7 +36,7 @@ class TokenService {
         }
         else
         {
-            token = this.token[index];
+            token = this.tokens[index];
             token.refreshToken = refreshToken;
         }
 

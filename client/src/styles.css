@@ -1,5 +1,8 @@
 body {
     background-color: gray;
+    background-image: url("../public/img/arknights_back.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 nav{
     display: flex;

@@ -108,7 +108,7 @@ class OperatorList extends React.Component {
                 </div>
 
                 <div style={{ visibility: this.state.loading ? "hidden" : "visible" }}>
-                    <button className='nice-button' onClick={this.createNewOperator}>Add</button>
+                    <button className='btn btn-outline-primary  border-secondary bg-dark' onClick={this.createNewOperator}>Add</button>
                     {this.state.operators.map((operator) => {
                         return <Operator key={operator.id} op={operator} />
                     })}
